@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050b14">
+<title>DRINEX | See Clearer. Decide Smarter.</title>
+<meta name="description" content="Discover DRINEX trading indicators and bots. See clearer. Decide smarter.">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;background:#050b14;color:#f4f8fc;line-height:1.7}
+a{text-decoration:none;color:inherit}
+.container{width:90%;max-width:1150px;margin:auto}
+header{position:sticky;top:0;z-index:10;background:#07111fee;border-bottom:1px solid #203349}
+nav{min-height:75px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.logo{font-size:25px;font-weight:900;letter-spacing:3px}
+.logo span{color:#45dbe7}
+.navlinks{display:flex;gap:25px;align-items:center}
+.navlinks a{color:#b9c8d8;font-size:14px}
+.navlinks a:hover{color:#45dbe7}
+.button{display:inline-block;padding:12px 22px;border-radius:10px;background:linear-gradient(110deg,#2389ff,#45dbe7);color:#03101d;font-weight:bold;border:0}
+.button:hover{opacity:.88}
+.secondary{background:#101f31;color:white;border:1px solid #29435c}
+.hero{padding:100px 0 85px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:50px}
+.tag{display:inline-block;color:#7debf0;background:#102536;border:1px solid #24495e;border-radius:30px;padding:6px 13px;font-size:12px;letter-spacing:1px}
+h1{font-size:clamp(42px,6vw,70px);line-height:1.1;letter-spacing:-2px;margin:24px 0}
+.gradient{background:linear-gradient(100deg,#fff,#8cdcff,#45dbe7);-webkit-background-clip:text;background-clip:text;color:transparent}
+.intro{color:#a5b6c9;font-size:17px;max-width:600px;margin-bottom:28px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.hero-box{padding:30px;border-radius:25px;border:1px solid #25445d;background:radial-gradient(ellipse at top right,#143b5d,#091321 70%);box-shadow:0 20px 70px #0006}
+.box-title{color:#9eb8ce;font-size:12px;letter-spacing:2px}
+.chart{height:190px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #26384b;margin:22px 0}
+.bar{flex:1;border-radius:3px;position:relative;min-width:5px}
+.bar:before{content:"";position:absolute;left:45%;top:-15px;width:2px;height:calc(100% + 30px);background:inherit}
+.bar:nth-child(odd){background:#45dbe7}
+.bar:nth-child(even){background:#288dff}
+.bar:nth-child(3n){background:#ff7185}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:#07111c;padding:12px;border:1px solid #203349;border-radius:10px;font-size:12px;color:#92a8bd}
+.stat strong{display:block;color:white;font-size:14px}
+section{padding:75px 0}
+.heading{margin-bottom:35px}
+.heading small{color:#45dbe7;text-transform:uppercase;letter-spacing:3px;font-weight:bold}
+h2{font-size:clamp(29px,4vw,42px);line-height:1.2;margin:10px 0}
+.heading p,.muted{color:#9aacc0}
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:linear-gradient(145deg,#0e1d30,#08111d);border:1px solid #203349;border-radius:20px;padding:25px;transition:.2s}
+.card:hover{transform:translateY(-5px);border-color:#45dbe7}
+.product-icon{height:130px;border-radius:14px;background:radial-gradient(ellipse at center,#153d5a,#081321);display:grid;place-items:center;font-size:48px;color:#45dbe7;margin-bottom:20px}
+.badge{display:inline-block;padding:4px 10px;border-radius:6px;background:#102c39;color:#7debf0;font-size:11px;font-weight:bold}
+.card h3{font-size:21px;margin:14px 0 8px}
+.card p{color:#9aacc0;font-size:14px;min-height:70px;margin-bottom:18px}
+.price{border-top:1px solid #203349;padding-top:16px;margin-bottom:16px;font-weight:bold}
+.price small{display:block;color:#8298ad;font-weight:normal;font-size:12px}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feature{padding:25px;background:#0b1626;border:1px solid #203349;border-radius:16px}
+.feature .icon{font-size:27px;color:#45dbe7}
+.feature h3{margin:12px 0 6px}
+.feature p{color:#9aacc0;font-size:14px}
+.cta{padding:40px;border-radius:23px;border:1px solid #28516a;background:linear-gradient(120deg,#10283d,#091321);display:flex;justify-content:space-between;align-items:center;gap:25px}
+.cta p{color:#9aacc0;max-width:650px}
+footer{border-top:1px solid #203349;padding:30px 0;color:#8499ad;font-size:12px}
+footer .bottom{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.disclaimer{margin-top:18px;max-width:850px}
+@media(max-width:800px){
+.hero{grid-template-columns:1fr;padding:65px 0;gap:35px}
+.products{grid-template-columns:repeat(2,1fr)}
+.features{grid-template-columns:1fr}
+.navlinks{gap:12px}
+.navlinks a{font-size:12px}
+.cta{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:560px){
+.container{width:92%}
+nav{min-height:65px;flex-wrap:wrap;padding:12px 0}
+.logo{font-size:21px}
+.navlinks{width:100%;justify-content:space-between;gap:8px}
+.navlinks a{font-size:12px}
+.hero{padding:50px 0}
+h1{font-size:44px}
+.intro{font-size:15px}
+.hero-box{padding:20px}
+.products{grid-template-columns:1fr}
+section{padding:52px 0}
+.actions .button{width:100%;text-align:center}
+.cta{padding:25px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="container">
+<nav>
+<a class="logo" href="#home">DRINEX<span>.</span></a>
+<div class="navlinks">
+<a href="#home">Home</a>
+<a href="#products">Products</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+</div>
+</nav>
+</div>
+</header>
+
+<main>
+
+<div class="container hero" id="home">
+<div>
+<span class="tag">TRADING TOOLS · BUILT FOR CLARITY</span>
+<h1>See the market<br><span class="gradient">with more clarity.</span></h1>
+<p class="intro">Explore trading indicators and automated trading tools designed to help you analyse the market, understand opportunities and make more informed decisions.</p>
+<div class="actions">
+<a class="button" href="#products">Explore Products ↓</a>
+<a class="button secondary" href="#contact">Contact Us ↗</a>
+</div>
+</div>
+
+<div class="hero-box">
+<div class="box-title">DRINEX / TRADING TOOLS</div>
+<div class="chart">
+<div class="bar" style="height:35%"></div>
+<div class="bar" style="height:48%"></div>
+<div class="bar" style="height:30%"></div>
+<div class="bar" style="height:60%"></div>
+<div class="bar" style="height:45%"></div>
+<div class="bar" style="height:72%"></div>
+<div class="bar" style="height:58%"></div>
+<div class="bar" style="height:85%"></div>
+<div class="bar" style="height:70%"></div>
+<div class="bar" style="height:95%"></div>
+</div>
+<div class="stats">
+<div class="stat">TOOLS<strong>Indicators</strong></div>
+<div class="stat">SYSTEMS<strong>Trading Bots</strong></div>
+<div class="stat">SUPPORT<strong>Direct</strong></div>
+</div>
+</div>
+</div>
+
+<section id="products">
+<div class="container">
+<div class="heading">
+<small>OUR COLLECTION</small>
+<h2>Tools for your trading workflow.</h2>
+<p>Explore our products and contact us for features, prices and purchase information.</p>
+</div>
+
+<div class="products">
+
+<article class="card">
+<div class="product-icon">⌁</div>
+<span class="badge">INDICATOR</span>
+<h3>DRINEX Indicator</h3>
+<p>Trading indicator designed to help users analyse market conditions and identify potential trading opportunities.</p>
+<div class="price">Price: Contact us<small>Ask about features and licence options.</small></div>
+<a class="button telegram-link" href="#contact">Product Details ↗</a>
+</article>
+
+<article class="card">
+<div class="product-icon">◈</div>
+<span class="badge">TRADING BOT</span>
+<h3>DRINEX Bot</h3>
+<p>Automated trading tool. Contact us to learn about its features, supported platforms and setup requirements.</p>
+<div class="price">Price: Contact us<small>Ask about compatibility and licence options.</small></div>
+<a class="button telegram-link" href="#contact">Product Details ↗</a>
+</article>
+
+<article class="card">
+<div class="product-icon">✧</div>
+<span class="badge">COMING SOON</span>
+<h3>New Product</h3>
+<p>A space for your next trading indicator, bot or other digital product.</p>
+<div class="price">Coming Soon<small>More information will be added later.</small></div>
+<a class="button telegram-link" href="#contact">Ask Us ↗</a>
+</article>
+
+</div>
+</div>
+</section>
+
+<section id="about">
+<div class="container">
+<div class="heading">
+<small>WHY DRINEX</small>
+<h2>Clarity. Simplicity. Better decisions.</h2>
+<p>Our goal is to present trading tools in a simple and clear way.</p>
+</div>
+<div class="features">
+<div class="feature">
+<div class="icon">◈</div>
+<h3>Clear Product Details</h3>
+<p>Learn about product features, supported platforms and available options.</p>
+</div>
+<div class="feature">
+<div class="icon">↗</div>
+<h3>Direct Contact</h3>
+<p>Ask questions and request product or purchase information through Telegram.</p>
+</div>
+<div class="feature">
+<div class="icon">▣</div>
+<h3>Mobile Friendly</h3>
+<p>The website adapts to phones, tablets and desktop computers.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section>
+<div class="container">
+<div class="cta">
+<div>
+<span class="tag">THE DRINEX PHILOSOPHY</span>
+<h2>SEE CLEARER.<br><span class="gradient">DECIDE SMARTER.</span></h2>
+<p>Explore our trading tools and contact us to find out more.</p>
+</div>
+<a class="button telegram-link" href="#contact">Contact DRINEX ↗</a>
+</div>
+</div>
+</section>
+
+<section id="contact">
+<div class="container">
+<div class="heading">
+<small>GET IN TOUCH</small>
+<h2>Questions about a product?</h2>
+<p>Contact us on Telegram for current prices, product details, compatibility and purchase instructions.</p>
+</div>
+<a class="button telegram-link" href="#contact">Contact on Telegram ↗</a>
+<p id="message" class="muted" style="margin-top:15px;display:none">Please add your Telegram username in the website code first.</p>
+</div>
+</section>
+
+</main>
+
+<footer>
+<div class="container">
+<div class="bottom">
+<a class="logo" href="#home">DRINEX<span>.</span></a>
+<span>© <span id="year"></span> DRINEX. All rights reserved.</span>
+</div>
+<p class="disclaimer">Risk Disclaimer: Trading involves risk, and losses are possible. Indicators and bots do not guarantee profits and are not financial advice. Past performance does not guarantee future results. Always understand a product and its risks before using it.</p>
+</div>
+</footer>
+
+<script>
+const TELEGRAM_USERNAME = "YOUR_TELEGRAM_USERNAME";
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+document.querySelectorAll(".telegram-link").forEach(function(link) {
+  if (TELEGRAM_USERNAME !== "YOUR_TELEGRAM_USERNAME" && TELEGRAM_USERNAME.trim() !== "") {
+    link.href = "https://t.me/" + TELEGRAM_USERNAME.replace("@","");
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+  } else {
+    link.addEventListener("click", function(event) {
+      event.preventDefault();
+      const message = document.getElementById("message");
+      message.style.display = "block";
+      message.scrollIntoView({behavior:"smooth"});
+    });
+  }
+});
+</script>
+
+</body>
+</html>
