@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#050b14">
 <title>DRINEX | See Clearer. Decide Smarter.</title>
 <meta name="description" content="Discover DRINEX trading indicators and bots. See clearer. Decide smarter.">
@@ -11,17 +11,27 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:Arial,Helvetica,sans-serif;background:#050b14;color:#f4f8fc;line-height:1.7}
+body.lock{overflow:hidden}
 a{text-decoration:none;color:inherit}
+button,input{font:inherit}
 .container{width:90%;max-width:1150px;margin:auto}
 header{position:sticky;top:0;z-index:10;background:#07111fee;border-bottom:1px solid #203349}
+.profile-area{display:flex;justify-content:flex-end;position:relative;padding:10px 0 0}
+.profile-trigger{display:flex;align-items:center;gap:9px;background:#0b1929;border:1px solid #29435c;color:white;padding:8px 13px;border-radius:10px;cursor:pointer;font-weight:bold;font-size:13px}
+.profile-trigger:hover{border-color:#45dbe7}
+.avatar{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:linear-gradient(110deg,#2389ff,#45dbe7);color:#03101d;font-weight:bold}
+.menu{display:none;position:absolute;right:0;top:calc(100% + 7px);width:205px;background:#0b1727;border:1px solid #29435c;border-radius:12px;padding:7px;box-shadow:0 18px 45px #0009;z-index:20}
+.menu.open{display:block}
+.menu button{display:block;width:100%;text-align:left;padding:10px;border:0;background:transparent;color:#d9e5f0;border-radius:8px;cursor:pointer}
+.menu button:hover{background:#142a3e;color:#45dbe7}
+.member-name{padding:8px 10px;color:#7debf0;border-bottom:1px solid #203349;margin-bottom:5px;font-size:12px;overflow-wrap:anywhere}
 nav{min-height:75px;display:flex;justify-content:space-between;align-items:center;gap:20px}
 .logo{font-size:25px;font-weight:900;letter-spacing:3px}
 .logo span{color:#45dbe7}
 .navlinks{display:flex;gap:25px;align-items:center}
 .navlinks a{color:#b9c8d8;font-size:14px}
 .navlinks a:hover{color:#45dbe7}
-.button{display:inline-block;padding:12px 22px;border-radius:10px;background:linear-gradient(110deg,#2389ff,#45dbe7);color:#03101d;font-weight:bold;border:0}
-.button:hover{opacity:.88}
+.button{display:inline-block;padding:12px 22px;border-radius:10px;background:linear-gradient(110deg,#2389ff,#45dbe7);color:#03101d;font-weight:bold;border:0;cursor:pointer}
 .secondary{background:#101f31;color:white;border:1px solid #29435c}
 .hero{padding:100px 0 85px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:50px}
 .tag{display:inline-block;color:#7debf0;background:#102536;border:1px solid #24495e;border-radius:30px;padding:6px 13px;font-size:12px;letter-spacing:1px}
@@ -32,12 +42,12 @@ h1{font-size:clamp(42px,6vw,70px);line-height:1.1;letter-spacing:-2px;margin:24p
 .hero-box{padding:30px;border-radius:25px;border:1px solid #25445d;background:radial-gradient(ellipse at top right,#143b5d,#091321 70%);box-shadow:0 20px 70px #0006}
 .box-title{color:#9eb8ce;font-size:12px;letter-spacing:2px}
 .chart{height:190px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #26384b;margin:22px 0}
-.bar{flex:1;border-radius:3px;position:relative;min-width:5px}
-.bar:before{content:"";position:absolute;left:45%;top:-15px;width:2px;height:calc(100% + 30px);background:inherit}
+.bar{flex:1;border-radius:3px;min-width:5px}
 .bar:nth-child(odd){background:#45dbe7}
 .bar:nth-child(even){background:#288dff}
 .bar:nth-child(3n){background:#ff7185}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stats,.products,.features{display:grid;gap:18px}
+.stats{grid-template-columns:repeat(3,1fr)}
 .stat{background:#07111c;padding:12px;border:1px solid #203349;border-radius:10px;font-size:12px;color:#92a8bd}
 .stat strong{display:block;color:white;font-size:14px}
 section{padding:75px 0}
@@ -45,25 +55,41 @@ section{padding:75px 0}
 .heading small{color:#45dbe7;text-transform:uppercase;letter-spacing:3px;font-weight:bold}
 h2{font-size:clamp(29px,4vw,42px);line-height:1.2;margin:10px 0}
 .heading p,.muted{color:#9aacc0}
-.products{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.card{background:linear-gradient(145deg,#0e1d30,#08111d);border:1px solid #203349;border-radius:20px;padding:25px;transition:.2s}
-.card:hover{transform:translateY(-5px);border-color:#45dbe7}
+.products{grid-template-columns:repeat(3,1fr)}
+.card{background:linear-gradient(145deg,#0e1d30,#08111d);border:1px solid #203349;border-radius:20px;padding:25px}
+.card:hover{border-color:#45dbe7}
 .product-icon{height:130px;border-radius:14px;background:radial-gradient(ellipse at center,#153d5a,#081321);display:grid;place-items:center;font-size:48px;color:#45dbe7;margin-bottom:20px}
 .badge{display:inline-block;padding:4px 10px;border-radius:6px;background:#102c39;color:#7debf0;font-size:11px;font-weight:bold}
 .card h3{font-size:21px;margin:14px 0 8px}
 .card p{color:#9aacc0;font-size:14px;min-height:70px;margin-bottom:18px}
 .price{border-top:1px solid #203349;padding-top:16px;margin-bottom:16px;font-weight:bold}
 .price small{display:block;color:#8298ad;font-weight:normal;font-size:12px}
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.features{grid-template-columns:repeat(3,1fr)}
 .feature{padding:25px;background:#0b1626;border:1px solid #203349;border-radius:16px}
 .feature .icon{font-size:27px;color:#45dbe7}
 .feature h3{margin:12px 0 6px}
-.feature p{color:#9aacc0;font-size:14px}
+.feature p,.cta p{color:#9aacc0;font-size:14px}
 .cta{padding:40px;border-radius:23px;border:1px solid #28516a;background:linear-gradient(120deg,#10283d,#091321);display:flex;justify-content:space-between;align-items:center;gap:25px}
-.cta p{color:#9aacc0;max-width:650px}
 footer{border-top:1px solid #203349;padding:30px 0;color:#8499ad;font-size:12px}
 footer .bottom{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
 .disclaimer{margin-top:18px;max-width:850px}
+.backdrop{position:fixed;inset:0;z-index:100;background:#020711d9;backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:18px;overflow:auto}
+.backdrop.show{display:flex}
+.modal{position:relative;width:100%;max-width:440px;background:linear-gradient(145deg,#102137,#07111e 72%);border:1px solid #2a5068;border-radius:22px;padding:30px;box-shadow:0 25px 90px #000b;margin:auto}
+.close{position:absolute;right:14px;top:10px;border:0;background:#14263a;color:#b9c8d8;width:35px;height:35px;border-radius:10px;cursor:pointer;font-size:22px}
+.modal-brand{font-size:18px;font-weight:900;letter-spacing:3px}
+.modal-brand span{color:#45dbe7}
+.modal h2{font-size:29px;margin:15px 0 4px}
+.sub{color:#9aacc0;font-size:13px;margin-bottom:20px}
+.form label{display:block;color:#c5d4e3;font-size:13px;margin:12px 0 5px}
+.form input{width:100%;padding:12px;border-radius:10px;border:1px solid #29435c;background:#06101d;color:white;outline:none}
+.form input:focus{border-color:#45dbe7}
+.form .button{width:100%;margin-top:20px}
+.switch{text-align:center;color:#9aacc0;font-size:13px;margin-top:17px}
+.textbtn{background:none;border:0;color:#45dbe7;cursor:pointer;font-weight:bold}
+.notice{display:none;margin-top:12px;padding:10px;border-radius:8px;background:#172c3c;color:#bfeef1;font-size:13px}
+.notice.show{display:block}
+.smallnote{font-size:11px;color:#738ba1;margin-top:13px}
 @media(max-width:800px){
 .hero{grid-template-columns:1fr;padding:65px 0;gap:35px}
 .products{grid-template-columns:repeat(2,1fr)}
@@ -86,186 +112,309 @@ h1{font-size:44px}
 section{padding:52px 0}
 .actions .button{width:100%;text-align:center}
 .cta{padding:25px}
+.modal{padding:25px 20px}
 }
 </style>
 </head>
 
 <body>
-
 <header>
 <div class="container">
-<nav>
-<a class="logo" href="#home">DRINEX<span>.</span></a>
-<div class="navlinks">
-<a href="#home">Home</a>
-<a href="#products">Products</a>
-<a href="#about">About</a>
-<a href="#contact">Contact</a>
-</div>
-</nav>
+  <div class="profile-area">
+    <button class="profile-trigger" id="profileTrigger" aria-expanded="false">
+      <span class="avatar" id="avatar">👤</span>
+      <span id="profileLabel">My Profile</span><span>⌄</span>
+    </button>
+
+    <div class="menu" id="profileMenu">
+      <div class="member-name" id="memberName" hidden></div>
+      <div id="loggedOut">
+        <button type="button" data-auth="signup">Sign Up</button>
+        <button type="button" data-auth="signin">Sign In</button>
+      </div>
+      <div id="loggedIn" hidden>
+        <button type="button" data-member="dashboard">My Dashboard</button>
+        <button type="button" data-member="profile">My Profile Details</button>
+        <button type="button" data-member="logout">Log Out</button>
+      </div>
+    </div>
+  </div>
+
+  <nav>
+    <a class="logo" href="#home">DRINEX<span>.</span></a>
+    <div class="navlinks">
+      <a href="#home">Home</a><a href="#products">Products</a>
+      <a href="#about">About</a><a href="#contact">Contact</a>
+    </div>
+  </nav>
 </div>
 </header>
 
 <main>
-
 <div class="container hero" id="home">
-<div>
-<span class="tag">TRADING TOOLS · BUILT FOR CLARITY</span>
-<h1>See the market<br><span class="gradient">with more clarity.</span></h1>
-<p class="intro">Explore trading indicators and automated trading tools designed to help you analyse the market, understand opportunities and make more informed decisions.</p>
-<div class="actions">
-<a class="button" href="#products">Explore Products ↓</a>
-<a class="button secondary" href="#contact">Contact Us ↗</a>
-</div>
-</div>
+  <div>
+    <span class="tag">TRADING TOOLS · BUILT FOR CLARITY</span>
+    <h1>See the market<br><span class="gradient">with more clarity.</span></h1>
+    <p class="intro">Explore trading indicators and automated trading tools designed to help you analyse the market, understand opportunities and make more informed decisions.</p>
+    <div class="actions">
+      <a class="button" href="#products">Explore Products ↓</a>
+      <a class="button secondary" href="#contact">Contact Us ↗</a>
+    </div>
+  </div>
 
-<div class="hero-box">
-<div class="box-title">DRINEX / TRADING TOOLS</div>
-<div class="chart">
-<div class="bar" style="height:35%"></div>
-<div class="bar" style="height:48%"></div>
-<div class="bar" style="height:30%"></div>
-<div class="bar" style="height:60%"></div>
-<div class="bar" style="height:45%"></div>
-<div class="bar" style="height:72%"></div>
-<div class="bar" style="height:58%"></div>
-<div class="bar" style="height:85%"></div>
-<div class="bar" style="height:70%"></div>
-<div class="bar" style="height:95%"></div>
-</div>
-<div class="stats">
-<div class="stat">TOOLS<strong>Indicators</strong></div>
-<div class="stat">SYSTEMS<strong>Trading Bots</strong></div>
-<div class="stat">SUPPORT<strong>Direct</strong></div>
-</div>
-</div>
+  <div class="hero-box">
+    <div class="box-title">DRINEX / TRADING TOOLS</div>
+    <div class="chart">
+      <div class="bar" style="height:35%"></div><div class="bar" style="height:48%"></div>
+      <div class="bar" style="height:30%"></div><div class="bar" style="height:60%"></div>
+      <div class="bar" style="height:45%"></div><div class="bar" style="height:72%"></div>
+      <div class="bar" style="height:58%"></div><div class="bar" style="height:85%"></div>
+      <div class="bar" style="height:70%"></div><div class="bar" style="height:95%"></div>
+    </div>
+    <div class="stats">
+      <div class="stat">TOOLS<strong>Indicators</strong></div>
+      <div class="stat">SYSTEMS<strong>Trading Bots</strong></div>
+      <div class="stat">SUPPORT<strong>Direct</strong></div>
+    </div>
+  </div>
 </div>
 
 <section id="products">
 <div class="container">
-<div class="heading">
-<small>OUR COLLECTION</small>
-<h2>Tools for your trading workflow.</h2>
-<p>Explore our products and contact us for features, prices and purchase information.</p>
-</div>
+  <div class="heading">
+    <small>OUR COLLECTION</small>
+    <h2>Tools for your trading workflow.</h2>
+    <p>Explore our products and contact us for features, prices and purchase information.</p>
+  </div>
 
-<div class="products">
+  <div class="products">
+    <article class="card">
+      <div class="product-icon">⌁</div><span class="badge">INDICATOR</span>
+      <h3>DRINEX Indicator</h3>
+      <p>Trading indicator designed to help users analyse market conditions and identify potential trading opportunities.</p>
+      <div class="price">Price: Contact us<small>Ask about features and licence options.</small></div>
+      <a class="button telegram-link" href="#contact">Product Details ↗</a>
+    </article>
 
-<article class="card">
-<div class="product-icon">⌁</div>
-<span class="badge">INDICATOR</span>
-<h3>DRINEX Indicator</h3>
-<p>Trading indicator designed to help users analyse market conditions and identify potential trading opportunities.</p>
-<div class="price">Price: Contact us<small>Ask about features and licence options.</small></div>
-<a class="button telegram-link" href="#contact">Product Details ↗</a>
-</article>
+    <article class="card">
+      <div class="product-icon">◈</div><span class="badge">TRADING BOT</span>
+      <h3>DRINEX Bot</h3>
+      <p>Automated trading tool. Contact us to learn about its features, supported platforms and setup requirements.</p>
+      <div class="price">Price: Contact us<small>Ask about compatibility and licence options.</small></div>
+      <a class="button telegram-link" href="#contact">Product Details ↗</a>
+    </article>
 
-<article class="card">
-<div class="product-icon">◈</div>
-<span class="badge">TRADING BOT</span>
-<h3>DRINEX Bot</h3>
-<p>Automated trading tool. Contact us to learn about its features, supported platforms and setup requirements.</p>
-<div class="price">Price: Contact us<small>Ask about compatibility and licence options.</small></div>
-<a class="button telegram-link" href="#contact">Product Details ↗</a>
-</article>
-
-<article class="card">
-<div class="product-icon">✧</div>
-<span class="badge">COMING SOON</span>
-<h3>New Product</h3>
-<p>A space for your next trading indicator, bot or other digital product.</p>
-<div class="price">Coming Soon<small>More information will be added later.</small></div>
-<a class="button telegram-link" href="#contact">Ask Us ↗</a>
-</article>
-
-</div>
+    <article class="card">
+      <div class="product-icon">✧</div><span class="badge">COMING SOON</span>
+      <h3>New Product</h3>
+      <p>A space for your next trading indicator, bot or other digital product.</p>
+      <div class="price">Coming Soon<small>More information will be added later.</small></div>
+      <a class="button telegram-link" href="#contact">Ask Us ↗</a>
+    </article>
+  </div>
 </div>
 </section>
 
 <section id="about">
 <div class="container">
-<div class="heading">
-<small>WHY DRINEX</small>
-<h2>Clarity. Simplicity. Better decisions.</h2>
-<p>Our goal is to present trading tools in a simple and clear way.</p>
-</div>
-<div class="features">
-<div class="feature">
-<div class="icon">◈</div>
-<h3>Clear Product Details</h3>
-<p>Learn about product features, supported platforms and available options.</p>
-</div>
-<div class="feature">
-<div class="icon">↗</div>
-<h3>Direct Contact</h3>
-<p>Ask questions and request product or purchase information through Telegram.</p>
-</div>
-<div class="feature">
-<div class="icon">▣</div>
-<h3>Mobile Friendly</h3>
-<p>The website adapts to phones, tablets and desktop computers.</p>
-</div>
-</div>
+  <div class="heading">
+    <small>WHY DRINEX</small><h2>Clarity. Simplicity. Better decisions.</h2>
+    <p>Our goal is to present trading tools in a simple and clear way.</p>
+  </div>
+  <div class="features">
+    <div class="feature"><div class="icon">◈</div><h3>Clear Product Details</h3><p>Learn about product features, supported platforms and available options.</p></div>
+    <div class="feature"><div class="icon">↗</div><h3>Direct Contact</h3><p>Ask questions and request product or purchase information through Telegram.</p></div>
+    <div class="feature"><div class="icon">▣</div><h3>Mobile Friendly</h3><p>The website adapts to phones, tablets and desktop computers.</p></div>
+  </div>
 </div>
 </section>
 
 <section>
 <div class="container">
-<div class="cta">
-<div>
-<span class="tag">THE DRINEX PHILOSOPHY</span>
-<h2>SEE CLEARER.<br><span class="gradient">DECIDE SMARTER.</span></h2>
-<p>Explore our trading tools and contact us to find out more.</p>
-</div>
-<a class="button telegram-link" href="#contact">Contact DRINEX ↗</a>
-</div>
+  <div class="cta">
+    <div><span class="tag">THE DRINEX PHILOSOPHY</span><h2>SEE CLEARER.<br><span class="gradient">DECIDE SMARTER.</span></h2><p>Explore our trading tools and contact us to find out more.</p></div>
+    <a class="button telegram-link" href="#contact">Contact DRINEX ↗</a>
+  </div>
 </div>
 </section>
 
 <section id="contact">
 <div class="container">
-<div class="heading">
-<small>GET IN TOUCH</small>
-<h2>Questions about a product?</h2>
-<p>Contact us on Telegram for current prices, product details, compatibility and purchase instructions.</p>
-</div>
-<a class="button telegram-link" href="#contact">Contact on Telegram ↗</a>
-<p id="message" class="muted" style="margin-top:15px;display:none">Please add your Telegram username in the website code first.</p>
+  <div class="heading">
+    <small>GET IN TOUCH</small><h2>Questions about a product?</h2>
+    <p>Contact us on Telegram for current prices, product details, compatibility and purchase instructions.</p>
+  </div>
+  <a class="button telegram-link" href="#contact">Contact on Telegram ↗</a>
+  <p id="message" class="muted" style="margin-top:15px;display:none">Please add your Telegram username in the website code first.</p>
 </div>
 </section>
-
 </main>
 
 <footer>
 <div class="container">
-<div class="bottom">
-<a class="logo" href="#home">DRINEX<span>.</span></a>
-<span>© <span id="year"></span> DRINEX. All rights reserved.</span>
-</div>
-<p class="disclaimer">Risk Disclaimer: Trading involves risk, and losses are possible. Indicators and bots do not guarantee profits and are not financial advice. Past performance does not guarantee future results. Always understand a product and its risks before using it.</p>
+  <div class="bottom"><a class="logo" href="#home">DRINEX<span>.</span></a><span>© <span id="year"></span> DRINEX. All rights reserved.</span></div>
+  <p class="disclaimer">Risk Disclaimer: Trading involves risk, and losses are possible. Indicators and bots do not guarantee profits and are not financial advice. Past performance does not guarantee future results. Always understand a product and its risks before using it.</p>
 </div>
 </footer>
 
+<div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <div class="modal">
+    <button class="close" id="closeModal" aria-label="Close popup">&times;</button>
+    <div class="modal-brand">DRINEX<span>.</span></div>
+    <h2 id="authTitle">Create your account</h2>
+    <p class="sub" id="authSub">Join DRINEX to view your member area.</p>
+
+    <form class="form" id="authForm">
+      <div id="nameWrap"><label for="fullName">Full Name</label><input id="fullName" autocomplete="name" placeholder="Enter your name" required></div>
+      <label for="email">Email Address</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+      <label for="password">Password</label><input id="password" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters" required>
+      <div id="confirmWrap"><label for="confirmPassword">Confirm Password</label><input id="confirmPassword" type="password" minlength="8" placeholder="Repeat your password" required></div>
+      <button class="button" id="submitAuth" type="submit">Create Account</button>
+    </form>
+
+    <div class="notice" id="notice" role="status"></div>
+    <p class="switch" id="switchText">Already have an account? <button class="textbtn" data-switch="signin" type="button">Sign In</button></p>
+    <p class="smallnote">Demo preview only. Secure account creation and sign-in are not enabled yet. Do not enter a real password here.</p>
+  </div>
+</div>
+
 <script>
-const TELEGRAM_USERNAME = "YOUR_TELEGRAM_USERNAME";
+const TELEGRAM_USERNAME="YOUR_TELEGRAM_USERNAME";
+document.getElementById("year").textContent=new Date().getFullYear();
 
-document.getElementById("year").textContent = new Date().getFullYear();
+const trigger=document.getElementById("profileTrigger");
+const menu=document.getElementById("profileMenu");
+const backdrop=document.getElementById("backdrop");
+let mode="signup",member=null;
 
-document.querySelectorAll(".telegram-link").forEach(function(link) {
-  if (TELEGRAM_USERNAME !== "YOUR_TELEGRAM_USERNAME" && TELEGRAM_USERNAME.trim() !== "") {
-    link.href = "https://t.me/" + TELEGRAM_USERNAME.replace("@","");
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-  } else {
-    link.addEventListener("click", function(event) {
-      event.preventDefault();
-      const message = document.getElementById("message");
-      message.style.display = "block";
-      message.scrollIntoView({behavior:"smooth"});
+function closeMenu(){
+  menu.classList.remove("open");
+  trigger.setAttribute("aria-expanded","false");
+}
+
+trigger.addEventListener("click",e=>{
+  e.stopPropagation();
+  menu.classList.toggle("open");
+  trigger.setAttribute("aria-expanded",String(menu.classList.contains("open")));
+});
+
+document.addEventListener("click",e=>{
+  if(!menu.contains(e.target)&&!trigger.contains(e.target))closeMenu();
+});
+
+function showAuth(which){
+  closeMenu();
+  mode=which;
+  const signup=which==="signup";
+
+  document.getElementById("authTitle").textContent=signup?"Create your account":"Welcome back";
+  document.getElementById("authSub").textContent=signup?"Join DRINEX to view your member area.":"Sign in to access your DRINEX member area.";
+  document.getElementById("nameWrap").hidden=!signup;
+  document.getElementById("fullName").required=signup;
+  document.getElementById("confirmWrap").hidden=!signup;
+  document.getElementById("confirmPassword").required=signup;
+  document.getElementById("password").autocomplete=signup?"new-password":"current-password";
+  document.getElementById("submitAuth").textContent=signup?"Create Account":"Sign In";
+  document.getElementById("switchText").innerHTML=signup
+    ?'Already have an account? <button class="textbtn" data-switch="signin" type="button">Sign In</button>'
+    :'New to DRINEX? <button class="textbtn" data-switch="signup" type="button">Create an Account</button>';
+
+  document.getElementById("notice").classList.remove("show");
+  document.getElementById("authForm").reset();
+  backdrop.classList.add("show");
+  document.body.classList.add("lock");
+}
+
+function closeAuth(){
+  backdrop.classList.remove("show");
+  document.body.classList.remove("lock");
+}
+
+document.querySelectorAll("[data-auth]").forEach(b=>
+  b.addEventListener("click",()=>showAuth(b.dataset.auth))
+);
+
+document.getElementById("closeModal").addEventListener("click",closeAuth);
+backdrop.addEventListener("click",e=>{if(e.target===backdrop)closeAuth()});
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){closeAuth();closeMenu()}
+});
+
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-switch]");
+  if(b)showAuth(b.dataset.switch);
+});
+
+function updateUI(){
+  const logged=!!member;
+  document.getElementById("loggedOut").hidden=logged;
+  document.getElementById("loggedIn").hidden=!logged;
+  document.getElementById("memberName").hidden=!logged;
+  document.getElementById("memberName").textContent=logged?"Signed in as "+member.name:"";
+  document.getElementById("profileLabel").textContent=logged?member.name:"My Profile";
+  document.getElementById("avatar").textContent=logged?(member.name.charAt(0).toUpperCase()||"U"):"👤";
+}
+
+document.getElementById("authForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const notice=document.getElementById("notice");
+  notice.classList.add("show");
+
+  if(mode==="signup"){
+    const name=document.getElementById("fullName").value.trim();
+    const email=document.getElementById("email").value.trim();
+    const pass=document.getElementById("password").value;
+    const confirm=document.getElementById("confirmPassword").value;
+
+    if(pass!==confirm){
+      notice.textContent="The passwords do not match.";
+      return;
+    }
+
+    member={name:name||email.split("@")[0],email};
+    updateUI();
+    notice.textContent="Demo preview only: this is not a real account. Connect secure authentication to activate sign-up.";
+  }else{
+    notice.textContent="Sign-in is not active yet. Connect Supabase Authentication to enable secure accounts.";
+    return;
+  }
+
+  setTimeout(closeAuth,2200);
+});
+
+document.querySelectorAll("[data-member]").forEach(b=>
+  b.addEventListener("click",()=>{
+    closeMenu();
+    const action=b.dataset.member;
+
+    if(action==="logout"){
+      member=null;
+      updateUI();
+    }else{
+      alert(action==="dashboard"
+        ?"The member dashboard can be added next."
+        :"Profile details can be connected after secure authentication is configured.");
+    }
+  })
+);
+
+document.querySelectorAll(".telegram-link").forEach(link=>{
+  if(TELEGRAM_USERNAME!=="YOUR_TELEGRAM_USERNAME"&&TELEGRAM_USERNAME.trim()!==""){
+    link.href="https://t.me/"+TELEGRAM_USERNAME.replace("@","");
+    link.target="_blank";
+    link.rel="noopener noreferrer";
+  }else{
+    link.addEventListener("click",e=>{
+      e.preventDefault();
+      const m=document.getElementById("message");
+      m.style.display="block";
+      m.scrollIntoView({behavior:"smooth"});
     });
   }
 });
-</script>
 
+updateUI();
+</script>
 </body>
 </html>
