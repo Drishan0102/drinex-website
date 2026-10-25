@@ -32,6 +32,7 @@ nav{min-height:75px;display:flex;justify-content:space-between;align-items:cente
 .navlinks a{color:#b9c8d8;font-size:14px}
 .navlinks a:hover{color:#45dbe7}
 .button{display:inline-block;padding:12px 22px;border-radius:10px;background:linear-gradient(110deg,#2389ff,#45dbe7);color:#03101d;font-weight:bold;border:0;cursor:pointer}
+.button:disabled{opacity:.6;cursor:wait}
 .secondary{background:#101f31;color:white;border:1px solid #29435c}
 .hero{padding:100px 0 85px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:50px}
 .tag{display:inline-block;color:#7debf0;background:#102536;border:1px solid #24495e;border-radius:30px;padding:6px 13px;font-size:12px;letter-spacing:1px}
@@ -87,9 +88,14 @@ footer .bottom{display:flex;justify-content:space-between;gap:15px;flex-wrap:wra
 .form .button{width:100%;margin-top:20px}
 .switch{text-align:center;color:#9aacc0;font-size:13px;margin-top:17px}
 .textbtn{background:none;border:0;color:#45dbe7;cursor:pointer;font-weight:bold}
-.notice{display:none;margin-top:12px;padding:10px;border-radius:8px;background:#172c3c;color:#bfeef1;font-size:13px}
+.notice{display:none;margin-top:12px;padding:10px;border-radius:8px;background:#172c3c;color:#bfeef1;font-size:13px;overflow-wrap:anywhere}
 .notice.show{display:block}
 .smallnote{font-size:11px;color:#738ba1;margin-top:13px}
+.member-panel{display:none;margin-top:20px;padding:20px;border:1px solid #29435c;border-radius:14px;background:#0b1929}
+.member-panel.show{display:block}
+.member-panel p{color:#a5b6c9;font-size:14px;margin:6px 0}
+.member-panel strong{color:#f4f8fc}
+[hidden]{display:none!important}
 @media(max-width:800px){
 .hero{grid-template-columns:1fr;padding:65px 0;gap:35px}
 .products{grid-template-columns:repeat(2,1fr)}
@@ -121,11 +127,10 @@ section{padding:52px 0}
 <header>
 <div class="container">
   <div class="profile-area">
-    <button class="profile-trigger" id="profileTrigger" aria-expanded="false">
+    <button class="profile-trigger" id="profileTrigger" aria-expanded="false" type="button">
       <span class="avatar" id="avatar">👤</span>
       <span id="profileLabel">My Profile</span><span>⌄</span>
     </button>
-
     <div class="menu" id="profileMenu">
       <div class="member-name" id="memberName" hidden></div>
       <div id="loggedOut">
@@ -139,7 +144,6 @@ section{padding:52px 0}
       </div>
     </div>
   </div>
-
   <nav>
     <a class="logo" href="#home">DRINEX<span>.</span></a>
     <div class="navlinks">
@@ -161,7 +165,6 @@ section{padding:52px 0}
       <a class="button secondary" href="#contact">Contact Us ↗</a>
     </div>
   </div>
-
   <div class="hero-box">
     <div class="box-title">DRINEX / TRADING TOOLS</div>
     <div class="chart">
@@ -186,7 +189,6 @@ section{padding:52px 0}
     <h2>Tools for your trading workflow.</h2>
     <p>Explore our products and contact us for features, prices and purchase information.</p>
   </div>
-
   <div class="products">
     <article class="card">
       <div class="product-icon">⌁</div><span class="badge">INDICATOR</span>
@@ -195,7 +197,6 @@ section{padding:52px 0}
       <div class="price">Price: Contact us<small>Ask about features and licence options.</small></div>
       <a class="button telegram-link" href="#contact">Product Details ↗</a>
     </article>
-
     <article class="card">
       <div class="product-icon">◈</div><span class="badge">TRADING BOT</span>
       <h3>DRINEX Bot</h3>
@@ -203,7 +204,6 @@ section{padding:52px 0}
       <div class="price">Price: Contact us<small>Ask about compatibility and licence options.</small></div>
       <a class="button telegram-link" href="#contact">Product Details ↗</a>
     </article>
-
     <article class="card">
       <div class="product-icon">✧</div><span class="badge">COMING SOON</span>
       <h3>New Product</h3>
@@ -259,11 +259,10 @@ section{padding:52px 0}
 
 <div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="authTitle">
   <div class="modal">
-    <button class="close" id="closeModal" aria-label="Close popup">&times;</button>
+    <button class="close" id="closeModal" aria-label="Close popup" type="button">&times;</button>
     <div class="modal-brand">DRINEX<span>.</span></div>
     <h2 id="authTitle">Create your account</h2>
     <p class="sub" id="authSub">Join DRINEX to view your member area.</p>
-
     <form class="form" id="authForm">
       <div id="nameWrap"><label for="fullName">Full Name</label><input id="fullName" autocomplete="name" placeholder="Enter your name" required></div>
       <label for="email">Email Address</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required>
@@ -271,150 +270,328 @@ section{padding:52px 0}
       <div id="confirmWrap"><label for="confirmPassword">Confirm Password</label><input id="confirmPassword" type="password" minlength="8" placeholder="Repeat your password" required></div>
       <button class="button" id="submitAuth" type="submit">Create Account</button>
     </form>
-
     <div class="notice" id="notice" role="status"></div>
     <p class="switch" id="switchText">Already have an account? <button class="textbtn" data-switch="signin" type="button">Sign In</button></p>
-    <p class="smallnote">Demo preview only. Secure account creation and sign-in are not enabled yet. Do not enter a real password here.</p>
+    <p class="smallnote" id="smallnote">Your password is handled by Supabase Authentication. Never share it with anyone.</p>
   </div>
 </div>
 
+<div class="backdrop" id="memberBackdrop" role="dialog" aria-modal="true" aria-labelledby="memberPanelTitle">
+  <div class="modal">
+    <button class="close" id="closeMemberModal" aria-label="Close member panel" type="button">&times;</button>
+    <div class="modal-brand">DRINEX<span>.</span></div>
+    <h2 id="memberPanelTitle">My Dashboard</h2>
+    <div class="member-panel show" id="memberPanelContent"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const TELEGRAM_USERNAME="YOUR_TELEGRAM_USERNAME";
-document.getElementById("year").textContent=new Date().getFullYear();
+const SUPABASE_URL = "https://wyzasifgpzkeavpizwwt.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_5EZnRbTZp4XYB9zgbXoUjw_0tZDoH3P";
 
-const trigger=document.getElementById("profileTrigger");
-const menu=document.getElementById("profileMenu");
-const backdrop=document.getElementById("backdrop");
-let mode="signup",member=null;
+/* Add your Telegram username below, without the @ symbol. */
+const TELEGRAM_USERNAME = "YOUR_TELEGRAM_USERNAME";
+const SITE_URL = "https://drishan0102.github.io/drinex-website/";
 
-function closeMenu(){
+document.getElementById("year").textContent = new Date().getFullYear();
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+const trigger = document.getElementById("profileTrigger");
+const menu = document.getElementById("profileMenu");
+const backdrop = document.getElementById("backdrop");
+const memberBackdrop = document.getElementById("memberBackdrop");
+let mode = "signup";
+let member = null;
+let authBusy = false;
+
+function closeMenu() {
   menu.classList.remove("open");
-  trigger.setAttribute("aria-expanded","false");
+  trigger.setAttribute("aria-expanded", "false");
 }
 
-trigger.addEventListener("click",e=>{
+trigger.addEventListener("click", e => {
   e.stopPropagation();
   menu.classList.toggle("open");
-  trigger.setAttribute("aria-expanded",String(menu.classList.contains("open")));
+  trigger.setAttribute("aria-expanded", String(menu.classList.contains("open")));
 });
 
-document.addEventListener("click",e=>{
-  if(!menu.contains(e.target)&&!trigger.contains(e.target))closeMenu();
+document.addEventListener("click", e => {
+  if (!menu.contains(e.target) && !trigger.contains(e.target)) closeMenu();
 });
 
-function showAuth(which){
+function showNotice(message, isError = false) {
+  const notice = document.getElementById("notice");
+  notice.textContent = message;
+  notice.style.color = isError ? "#ffb7c1" : "#bfeef1";
+  notice.classList.add("show");
+}
+
+function showAuth(which) {
   closeMenu();
-  mode=which;
-  const signup=which==="signup";
+  mode = which;
+  const signup = which === "signup";
 
-  document.getElementById("authTitle").textContent=signup?"Create your account":"Welcome back";
-  document.getElementById("authSub").textContent=signup?"Join DRINEX to view your member area.":"Sign in to access your DRINEX member area.";
-  document.getElementById("nameWrap").hidden=!signup;
-  document.getElementById("fullName").required=signup;
-  document.getElementById("confirmWrap").hidden=!signup;
-  document.getElementById("confirmPassword").required=signup;
-  document.getElementById("password").autocomplete=signup?"new-password":"current-password";
-  document.getElementById("submitAuth").textContent=signup?"Create Account":"Sign In";
-  document.getElementById("switchText").innerHTML=signup
-    ?'Already have an account? <button class="textbtn" data-switch="signin" type="button">Sign In</button>'
-    :'New to DRINEX? <button class="textbtn" data-switch="signup" type="button">Create an Account</button>';
-
+  document.getElementById("authTitle").textContent = signup ? "Create your account" : "Welcome back";
+  document.getElementById("authSub").textContent = signup
+    ? "Join DRINEX to view your member area."
+    : "Sign in to access your DRINEX member area.";
+  document.getElementById("nameWrap").hidden = !signup;
+  document.getElementById("fullName").required = signup;
+  document.getElementById("confirmWrap").hidden = !signup;
+  document.getElementById("confirmPassword").required = signup;
+  document.getElementById("password").autocomplete = signup ? "new-password" : "current-password";
+  document.getElementById("submitAuth").textContent = signup ? "Create Account" : "Sign In";
+  document.getElementById("switchText").innerHTML = signup
+    ? 'Already have an account? <button class="textbtn" data-switch="signin" type="button">Sign In</button>'
+    : 'New to DRINEX? <button class="textbtn" data-switch="signup" type="button">Create an Account</button>';
   document.getElementById("notice").classList.remove("show");
   document.getElementById("authForm").reset();
+  document.getElementById("submitAuth").disabled = false;
   backdrop.classList.add("show");
   document.body.classList.add("lock");
 }
 
-function closeAuth(){
+function closeAuth() {
   backdrop.classList.remove("show");
-  document.body.classList.remove("lock");
+  if (!memberBackdrop.classList.contains("show")) document.body.classList.remove("lock");
 }
 
-document.querySelectorAll("[data-auth]").forEach(b=>
-  b.addEventListener("click",()=>showAuth(b.dataset.auth))
-);
-
-document.getElementById("closeModal").addEventListener("click",closeAuth);
-backdrop.addEventListener("click",e=>{if(e.target===backdrop)closeAuth()});
-
-document.addEventListener("keydown",e=>{
-  if(e.key==="Escape"){closeAuth();closeMenu()}
-});
-
-document.addEventListener("click",e=>{
-  const b=e.target.closest("[data-switch]");
-  if(b)showAuth(b.dataset.switch);
-});
-
-function updateUI(){
-  const logged=!!member;
-  document.getElementById("loggedOut").hidden=logged;
-  document.getElementById("loggedIn").hidden=!logged;
-  document.getElementById("memberName").hidden=!logged;
-  document.getElementById("memberName").textContent=logged?"Signed in as "+member.name:"";
-  document.getElementById("profileLabel").textContent=logged?member.name:"My Profile";
-  document.getElementById("avatar").textContent=logged?(member.name.charAt(0).toUpperCase()||"U"):"👤";
+function closeMemberPanel() {
+  memberBackdrop.classList.remove("show");
+  if (!backdrop.classList.contains("show")) document.body.classList.remove("lock");
 }
 
-document.getElementById("authForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const notice=document.getElementById("notice");
-  notice.classList.add("show");
+document.querySelectorAll("[data-auth]").forEach(button => {
+  button.addEventListener("click", () => showAuth(button.dataset.auth));
+});
 
-  if(mode==="signup"){
-    const name=document.getElementById("fullName").value.trim();
-    const email=document.getElementById("email").value.trim();
-    const pass=document.getElementById("password").value;
-    const confirm=document.getElementById("confirmPassword").value;
+document.getElementById("closeModal").addEventListener("click", closeAuth);
+backdrop.addEventListener("click", e => {
+  if (e.target === backdrop) closeAuth();
+});
+document.getElementById("closeMemberModal").addEventListener("click", closeMemberPanel);
+memberBackdrop.addEventListener("click", e => {
+  if (e.target === memberBackdrop) closeMemberPanel();
+});
 
-    if(pass!==confirm){
-      notice.textContent="The passwords do not match.";
-      return;
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    closeAuth();
+    closeMemberPanel();
+    closeMenu();
+  }
+});
+
+document.addEventListener("click", e => {
+  const button = e.target.closest("[data-switch]");
+  if (button) showAuth(button.dataset.switch);
+});
+
+function getMemberFromUser(user) {
+  if (!user) return null;
+  return {
+    id: user.id,
+    name: user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0] || "Member",
+    email: user.email || ""
+  };
+}
+
+function updateUI() {
+  const logged = Boolean(member);
+  document.getElementById("loggedOut").hidden = logged;
+  document.getElementById("loggedIn").hidden = !logged;
+  document.getElementById("memberName").hidden = !logged;
+  document.getElementById("memberName").textContent = logged ? "Signed in as " + member.name : "";
+  document.getElementById("profileLabel").textContent = logged ? member.name : "My Profile";
+  document.getElementById("avatar").textContent = logged ? (member.name.charAt(0).toUpperCase() || "U") : "👤";
+}
+
+function openMemberPanel(title, html) {
+  closeMenu();
+  document.getElementById("memberPanelTitle").textContent = title;
+  document.getElementById("memberPanelContent").innerHTML = html;
+  memberBackdrop.classList.add("show");
+  document.body.classList.add("lock");
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function openDashboard() {
+  if (!member) return showAuth("signin");
+
+  openMemberPanel("My Dashboard", `
+    <p>Welcome, <strong>${escapeHTML(member.name)}</strong>.</p>
+    <p>Your DRINEX account is signed in.</p>
+    <p>Explore the available tools on the Products section of the website. Product access and purchases are not enabled automatically by creating an account.</p>
+    <p><button class="button" type="button" id="goProducts">Explore Products</button></p>
+  `);
+
+  document.getElementById("goProducts").addEventListener("click", () => {
+    closeMemberPanel();
+    document.getElementById("products").scrollIntoView({ behavior: "smooth" });
+  });
+}
+
+function openProfileDetails() {
+  if (!member) return showAuth("signin");
+
+  openMemberPanel("My Profile Details", `
+    <p><strong>Full Name</strong></p>
+    <p>${escapeHTML(member.name)}</p>
+    <p><strong>Email Address</strong></p>
+    <p>${escapeHTML(member.email)}</p>
+    <p class="muted">Your profile name is taken from your Supabase account metadata.</p>
+  `);
+}
+
+document.querySelectorAll("[data-member]").forEach(button => {
+  button.addEventListener("click", async () => {
+    const action = button.dataset.member;
+    closeMenu();
+
+    if (action === "dashboard") {
+      openDashboard();
+    } else if (action === "profile") {
+      openProfileDetails();
+    } else if (action === "logout") {
+      const { error } = await supabaseClient.auth.signOut();
+
+      if (error) {
+        alert("Could not log out: " + error.message);
+      } else {
+        member = null;
+        updateUI();
+        closeMemberPanel();
+      }
+    }
+  });
+});
+
+document.getElementById("authForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (authBusy) return;
+
+  const submitButton = document.getElementById("submitAuth");
+  submitButton.disabled = true;
+  authBusy = true;
+
+  showNotice(mode === "signup" ? "Creating your account..." : "Signing you in...");
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  try {
+    if (mode === "signup") {
+      const name = document.getElementById("fullName").value.trim();
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (!name) {
+        showNotice("Please enter your full name.", true);
+        return;
+      }
+
+      if (password.length < 8) {
+        showNotice("Please use a password with at least 8 characters.", true);
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showNotice("The passwords do not match.", true);
+        return;
+      }
+
+      const { data, error } = await supabaseClient.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { full_name: name },
+          emailRedirectTo: SITE_URL
+        }
+      });
+
+      if (error) throw error;
+
+      if (data.session && data.user) {
+        member = getMemberFromUser(data.user);
+        updateUI();
+        showNotice("Account created successfully. You are now signed in.");
+        setTimeout(closeAuth, 1400);
+      } else {
+        showNotice("Account created. Check your email for the confirmation link before signing in.");
+      }
+    } else {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) throw error;
+
+      member = getMemberFromUser(data.user);
+      updateUI();
+      showNotice("Sign-in successful.");
+      setTimeout(closeAuth, 900);
+    }
+  } catch (error) {
+    let message = error?.message || "Something went wrong. Please try again.";
+
+    if (/invalid login credentials/i.test(message)) {
+      message = "Email or password is incorrect. Please check and try again.";
+    } else if (/user already registered/i.test(message)) {
+      message = "This email already has an account. Please choose Sign In instead.";
     }
 
-    member={name:name||email.split("@")[0],email};
-    updateUI();
-    notice.textContent="Demo preview only: this is not a real account. Connect secure authentication to activate sign-up.";
-  }else{
-    notice.textContent="Sign-in is not active yet. Connect Supabase Authentication to enable secure accounts.";
+    showNotice(message, true);
+  } finally {
+    authBusy = false;
+    submitButton.disabled = false;
+  }
+});
+
+supabaseClient.auth.onAuthStateChange((_event, session) => {
+  member = getMemberFromUser(session?.user || null);
+  updateUI();
+});
+
+(async function initialiseAuth() {
+  const { data, error } = await supabaseClient.auth.getSession();
+
+  if (error) {
+    console.error("Could not load session:", error.message);
     return;
   }
 
-  setTimeout(closeAuth,2200);
-});
+  member = getMemberFromUser(data.session?.user || null);
+  updateUI();
+})();
 
-document.querySelectorAll("[data-member]").forEach(b=>
-  b.addEventListener("click",()=>{
-    closeMenu();
-    const action=b.dataset.member;
-
-    if(action==="logout"){
-      member=null;
-      updateUI();
-    }else{
-      alert(action==="dashboard"
-        ?"The member dashboard can be added next."
-        :"Profile details can be connected after secure authentication is configured.");
-    }
-  })
-);
-
-document.querySelectorAll(".telegram-link").forEach(link=>{
-  if(TELEGRAM_USERNAME!=="YOUR_TELEGRAM_USERNAME"&&TELEGRAM_USERNAME.trim()!==""){
-    link.href="https://t.me/"+TELEGRAM_USERNAME.replace("@","");
-    link.target="_blank";
-    link.rel="noopener noreferrer";
-  }else{
-    link.addEventListener("click",e=>{
-      e.preventDefault();
-      const m=document.getElementById("message");
-      m.style.display="block";
-      m.scrollIntoView({behavior:"smooth"});
+document.querySelectorAll(".telegram-link").forEach(link => {
+  if (TELEGRAM_USERNAME !== "YOUR_TELEGRAM_USERNAME" && TELEGRAM_USERNAME.trim() !== "") {
+    link.href = "https://t.me/" + TELEGRAM_USERNAME.replace("@", "");
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+  } else {
+    link.addEventListener("click", event => {
+      event.preventDefault();
+      const message = document.getElementById("message");
+      message.style.display = "block";
+      message.scrollIntoView({ behavior: "smooth" });
     });
   }
 });
-
-updateUI();
 </script>
 </body>
 </html>
